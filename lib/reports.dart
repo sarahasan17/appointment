@@ -14,7 +14,7 @@ class _reportsState extends State<reports> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.teal[300],
+          backgroundColor: blue,
           title: Center(
             child: Text(
               "Daily reminder",
@@ -23,11 +23,44 @@ class _reportsState extends State<reports> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.all(20.0),
-          decoration: BoxDecoration(
-              color: light, borderRadius: BorderRadius.circular(10.0)),
-        ),
+            padding: EdgeInsets.all(20.0),
+            decoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                'HOSPITAL NAME',
+                style: TextStyle(
+                  color: blue,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'IBMPlexSansCondensed',
+                ),
+              ),
+              NewWidget(text: "Doctor's name:"),
+              NewWidget(text: "Diagnosis:"),
+              NewWidget(text: "Blood Pressure:"),
+              NewWidget(text: "Pulse Rate:"),
+              NewWidget(text: "Weight:"),
+              NewWidget(text: "Diet:"),
+              NewWidget(text: "Next Visit:"),
+              NewWidget(text: "Follow up Phy:"),
+              NewWidget(text: "Medicines:"),
+            ])),
       ),
+    );
+  }
+}
+
+class NewWidget extends StatelessWidget {
+  final String text;
+  NewWidget({this.text = ""});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(fontSize: 28, color: blue),
     );
   }
 }
