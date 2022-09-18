@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "946043407678",
+    "project_id": "appointment-reminder-650fe",
+    "storage_bucket": "appointment-reminder-650fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946043407678:android:046358903858641b00706f",
+        "android_client_info": {
+          "package_name": "com.sarahasan.appointment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946043407678-f8ucrhqlsbiif7g5r4b083hufqcoetnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC15ChR8RqvAVW56bwSXkCZj_9U9tV0JrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946043407678-f8ucrhqlsbiif7g5r4b083hufqcoetnf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
