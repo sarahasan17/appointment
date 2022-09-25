@@ -50,11 +50,46 @@ class buttons1 extends StatelessWidget {
   }
 }
 
+class buttons3 extends StatelessWidget {
+  @override
+  final String text1;
+  final IconData? icon;
+  final VoidCallback? onpressed;
+  buttons3({this.text1 = '', this.icon, this.onpressed});
+  Widget build(BuildContext context) {
+    return Container(
+      child: GestureDetector(
+          onTap: onpressed,
+          child: Container(
+              color: white,
+              padding: EdgeInsets.all(10.0),
+              margin: EdgeInsets.all(5.0),
+              height: 120,
+              width: 360,
+              child: Center(
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Icon(
+                    icon,
+                    size: 32.0,
+                    color: blue,
+                  ),
+                  SizedBox(
+                    width: 16.0,
+                  ),
+                  textinbutton(text: text1),
+                ]),
+              ))),
+    );
+  }
+}
+
 class buttons2 extends StatelessWidget {
   @override
   final String text1;
+  final IconData? icon;
   final VoidCallback? onpressed;
-  buttons2({this.text1 = '', this.onpressed});
+  buttons2({this.text1 = '', this.icon, this.onpressed});
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
@@ -71,8 +106,8 @@ class buttons2 extends StatelessWidget {
           ),
           padding: EdgeInsets.all(10.0),
           margin: EdgeInsets.all(5.0),
-          height: 130,
-          width: 170,
+          height: 120,
+          width: 150,
           child: Center(
               child: Column(
             children: [
@@ -80,8 +115,17 @@ class buttons2 extends StatelessWidget {
                 height: 40.0,
               ),
               Expanded(
-                child: textinbutton(
-                  text: text1,
+                child: Row(
+                  children: [
+                    Icon(
+                      icon,
+                      size: 30.0,
+                      color: blue,
+                    ),
+                    textinbutton(
+                      text: text1,
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -100,9 +144,9 @@ class textinbutton extends StatelessWidget {
       text,
       style: TextStyle(
           fontFamily: "SourceSansPro",
-          fontSize: 20,
+          fontSize: 26,
           fontWeight: FontWeight.w600,
-          color: Colors.white),
+          color: blue),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
 import 'package:path/path.dart';
+import 'package:appointment/uploads.dart';
 
 class view_prescription extends StatefulWidget {
   const view_prescription({Key? key}) : super(key: key);
@@ -33,20 +34,62 @@ class _view_prescriptionState extends State<view_prescription> {
         body: Container(
           padding: EdgeInsets.all(30.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              container_frontend(
-                icon: Icons.attach_file,
-                text: "Select File",
+              Text(
+                '19-09-2022',
+                style: TextStyle(
+                    color: blue,
+                    fontSize: 30.0,
+                    fontFamily: 'IBMPlexSansCondensed',
+                    fontWeight: FontWeight.w400),
               ),
               SizedBox(
-                height: 20.0,
+                height: 10.0,
               ),
-              container_frontend(
-                icon: Icons.cloud_download_outlined,
-                text: "Upload File",
-              ),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0), color: light),
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('DOCTOR NAME',
+                            style: TextStyle(
+                                color: blue,
+                                fontSize: 28.0,
+                                fontFamily: 'SourceSansPro',
+                                fontWeight: FontWeight.w600)),
+                        Text('Hospital',
+                            style: TextStyle(
+                                color: blue,
+                                fontSize: 23.0,
+                                fontFamily: 'SourceSansPro',
+                                fontWeight: FontWeight.w400)),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 90.0,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => uploads()));
+                      },
+                      child: Container(
+                        color: blue,
+                        child: Icon(
+                          Icons.add,
+                          color: light,
+                          size: 40.0,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const IconData access_time_outlined =
     IconData(0xee2d, fontFamily: 'MaterialIcons');
@@ -87,7 +88,7 @@ class appointment_reminder extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
-              color: Color(0xFFF5FAFF),
+              color: light,
             ),
             padding: EdgeInsets.all(10.0),
             child: Column(
@@ -164,23 +165,44 @@ class appointment_reminder extends StatelessWidget {
           SizedBox(
             height: 20.0,
           ),
-          GestureDetector(
-            onTap: onClicked4,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: blue,
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: blue,
+                ),
+                padding: EdgeInsets.all(13.0),
+                child: Text(
+                  'Set Alarm',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'SourceSansPro',
+                      fontSize: 20.0),
+                ),
               ),
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                'Reschedule',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'SourceSansPro',
-                    fontSize: 20.0),
+              SizedBox(
+                width: 25.0,
               ),
-            ),
-          )
+              GestureDetector(
+                onTap: onClicked4,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: blue,
+                  ),
+                  padding: EdgeInsets.all(13.0),
+                  child: Text(
+                    'Reschedule',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'SourceSansPro',
+                        fontSize: 20.0),
+                  ),
+                ),
+              )
+            ],
+          ),
         ]),
       ),
     ));
@@ -213,7 +235,7 @@ class _BuildwidgetState extends State<Buildwidget> {
     else {
       final hours = time?.hour.toString().padLeft(2, '0');
       final min = time?.minute.toString().padLeft(2, '0');
-      return '${time?.hour}:${time?.minute}';
+      return '${hours}:${min}';
     }
   }
 
@@ -223,7 +245,7 @@ class _BuildwidgetState extends State<Buildwidget> {
     else {
       final hours = time2?.hour.toString().padLeft(2, '0');
       final min = time2?.minute.toString().padLeft(2, '0');
-      return '${time2?.hour}:${time2?.minute}';
+      return '${hours}:${min}';
     }
   }
 
@@ -251,7 +273,8 @@ class _BuildwidgetState extends State<Buildwidget> {
   }
 
   Future picktime1(BuildContext context) async {
-    final initialtime = TimeOfDay(hour: 9, minute: 0);
+    final initialtime =
+        TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
     final newtime = await showTimePicker(
         context: context, initialTime: time ?? initialtime);
     if (newtime == null) return;
@@ -276,5 +299,10 @@ class _BuildwidgetState extends State<Buildwidget> {
     setState(
       () => time2 = null,
     );
+    Future setAlarm(BuildContext context) async {
+      if (time == DateTime.now()) {
+        setState(() => print("Alarm"));
+      }
+    }
   }
 }

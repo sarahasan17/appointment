@@ -45,19 +45,6 @@ class _firstscreenState extends State<firstscreen> {
                         fontWeight: FontWeight.w500,
                         color: blue),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => details()),
-                      );
-                    },
-                    child: Icon(
-                      UniconsLine.apps,
-                      size: 50.0,
-                      color: blue,
-                    ),
-                  )
                 ],
               ),
               SizedBox(height: 20.0),
