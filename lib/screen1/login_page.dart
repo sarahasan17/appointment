@@ -170,7 +170,8 @@ class _detailsState extends State<details> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Signup()),
+                                      builder: (context) =>
+                                          Signup(camera: widget.camera)),
                                 );
                               },
                               child: const Text(

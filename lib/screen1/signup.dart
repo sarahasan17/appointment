@@ -1,10 +1,33 @@
+import 'package:appointment/requests/signup_request.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:appointment/requests/cubit.dart';
+import 'package:appointment/screen1/login_page.dart';
+import 'firstscreen2.dart';
+import 'package:camera/camera.dart';
+
+class Loadingscreen extends StatelessWidget {
+  const Loadingscreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation<Color>(blue),
+    );
+  }
+}
+
+Future part() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+  return (Signup(camera: firstCamera));
+}
 
 class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+  final CameraDescription camera;
+  const Signup({required this.camera});
 
   @override
   State<Signup> createState() => _SignupState();
@@ -40,132 +63,171 @@ class _SignupState extends State<Signup> {
               ),
             ),
           ),
-          body: Container(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Center(
-                  child: Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                      color: blue,
-                      fontSize: 50.0,
-                      fontWeight: FontWeight.w600,
+          body: Center(
+            child: Container(
+              padding: const EdgeInsets.all(15.0),
+              child: ListView(
+                children: [
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(
+                          height: 100.0,
+                        ),
+                        const Center(
+                          child: Text(
+                            'SIGN UP',
+                            style: TextStyle(
+                              color: blue,
+                              fontSize: 50.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 48.0,
+                        ),
+                        TextField(
+                          textAlign: TextAlign.left,
+                          key: _nameKey,
+                          keyboardType: TextInputType.name,
+                          onChanged: (value) {
+                            _isButtonDisabled = _nameKey.currentState!.isValid;
+                            _nameKey.currentState?.validate();
+                            validator:
+                            (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                            };
+                          },
+                          decoration: kinputdecoration.copyWith(
+                              hintText: 'Enter your name'),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          textAlign: TextAlign.left,
+                          key: _emailKey,
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (value) {
+                            _isButtonDisabled = _emailKey.currentState!.isValid;
+                            _emailKey.currentState?.validate();
+                            validator:
+                            (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                            };
+                          },
+                          decoration: kinputdecoration.copyWith(
+                              hintText: 'Enter your email'),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          textAlign: TextAlign.left,
+                          key: _ageKey,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            _isButtonDisabled = _ageKey.currentState!.isValid;
+                            _ageKey.currentState?.validate();
+                            validator:
+                            (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              ;
+                            };
+                          },
+                          decoration: kinputdecoration.copyWith(
+                              hintText: 'Enter your age'),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          textAlign: TextAlign.left,
+                          key: _passwordKey,
+                          obscureText: true,
+                          onChanged: (value) {
+                            _isButtonDisabled =
+                                _passwordKey.currentState!.isValid;
+                            _passwordKey.currentState?.validate();
+                            validator:
+                            (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                            };
+                          },
+                          decoration: kinputdecoration.copyWith(
+                              hintText: 'Enter your password.'),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        TextField(
+                          textAlign: TextAlign.left,
+                          key: _passwordConfirmKey,
+                          obscureText: true,
+                          onChanged: (value) {
+                            _isButtonDisabled =
+                                _passwordConfirmKey.currentState!.isValid;
+                            _passwordConfirmKey.currentState?.validate();
+                            validator:
+                            (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                            };
+                          },
+                          decoration: kinputdecoration.copyWith(
+                              hintText: 'Confirm your password'),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        BlocConsumer<SignupCubit, SignupState>(
+                            listener: (context, state) {
+                          if (state is LoginSuccess) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Firstscreen2(camera: widget.camera)));
+                          }
+                          if (state is SignupError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Enter valid Data'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }, builder: (context, state) {
+                          if (state is SignupLoading) {
+                            return const Loadingscreen();
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text_app(
+                                text: 'SIGN UP',
+                                colors: blue,
+                              ),
+                            ],
+                          );
+                        }),
+                      ],
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 48.0,
-                ),
-                TextField(
-                  textAlign: TextAlign.left,
-                  key: _nameKey,
-                  keyboardType: TextInputType.name,
-                  onChanged: (value) {
-                    _isButtonDisabled = _nameKey.currentState!.isValid;
-                    _nameKey.currentState?.validate();
-                    validator:
-                    (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                    };
-                  },
-                  decoration:
-                      kinputdecoration.copyWith(hintText: 'Enter your name'),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  key: _emailKey,
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) {
-                    _isButtonDisabled = _emailKey.currentState!.isValid;
-                    _emailKey.currentState?.validate();
-                    validator:
-                    (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                    };
-                  },
-                  decoration:
-                      kinputdecoration.copyWith(hintText: 'Enter your email'),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  key: _ageKey,
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    _isButtonDisabled = _ageKey.currentState!.isValid;
-                    _ageKey.currentState?.validate();
-                    validator:
-                    (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      ;
-                    };
-                  },
-                  decoration:
-                      kinputdecoration.copyWith(hintText: 'Enter your age'),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  key: _passwordKey,
-                  obscureText: true,
-                  onChanged: (value) {
-                    _isButtonDisabled = _passwordKey.currentState!.isValid;
-                    _passwordKey.currentState?.validate();
-                    validator:
-                    (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                    };
-                  },
-                  decoration: kinputdecoration.copyWith(
-                      hintText: 'Enter your password.'),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                TextField(
-                  textAlign: TextAlign.left,
-                  key: _passwordConfirmKey,
-                  obscureText: true,
-                  onChanged: (value) {
-                    _isButtonDisabled =
-                        _passwordConfirmKey.currentState!.isValid;
-                    _passwordConfirmKey.currentState?.validate();
-                    validator:
-                    (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                    };
-                  },
-                  decoration: kinputdecoration.copyWith(
-                      hintText: 'Confirm your password'),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                Text_app(
-                  text: 'SIGN UP',
-                  colors: blue,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
