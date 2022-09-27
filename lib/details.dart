@@ -3,393 +3,192 @@ import 'package:appointment/firstscreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:appointment/signup.dart';
+import 'package:appointment/requests/api_call.dart';
+import 'package:appointment/requests/signup_request.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:camera/camera.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:appointment/requests/cubit.dart';
+
+class loadingscreen extends StatelessWidget {
+  const loadingscreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation<Color>(blue),
+    );
+  }
+}
+
+Future part() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+  return (details(camera: firstCamera));
+}
 
 class details extends StatefulWidget {
-  const details({Key? key}) : super(key: key);
-
+  final CameraDescription camera;
+  details({required this.camera});
   @override
   State<details> createState() => _detailsState();
 }
 
 class _detailsState extends State<details> {
-  @override
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  final GlobalKey<FormFieldState> _emailKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _passwordKey = GlobalKey<FormFieldState>();
+  bool _isButtonDisabled = false;
+
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: blue,
-          title: Center(
-            child: Text(
-              "Daily reminder",
-              style: TextStyle(
-                  fontSize: 25.0, fontWeight: FontWeight.w600, color: white),
+      home: BlocProvider(
+        create: (context) => LoginCubit(),
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: blue,
+            title: Center(
+              child: Text(
+                "Daily reminder",
+                style: TextStyle(
+                    fontSize: 25.0, fontWeight: FontWeight.w600, color: white),
+              ),
             ),
           ),
-        ),
-        body: Container(
-          padding: EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(
-                child: Text(
-                  'LOGIN',
-                  style: TextStyle(
-                      color: blue, fontSize: 50.0, fontWeight: FontWeight.w600),
-                ),
-              ),
-              SizedBox(
-                height: 48.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
-                decoration:
-                    kinputdecoration.copyWith(hintText: 'Enter your email'),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                obscureText: true,
-                onChanged: (value) {},
-                decoration:
-                    kinputdecoration.copyWith(hintText: 'Enter your password.'),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              text_app(
-                text: 'LOGIN',
-                colors: blue,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Don\'t have an account    ',
-                    style: TextStyle(color: blue),
+          body: Container(
+            padding: EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                  child: Text(
+                    'LOGIN',
+                    style: TextStyle(
+                        color: blue,
+                        fontSize: 50.0,
+                        fontWeight: FontWeight.w600),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
+                ),
+                SizedBox(
+                  height: 48.0,
+                ),
+                TextFormField(
+                  controller: emailcontroller,
+                  key: _emailKey,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) {
+                    _isButtonDisabled = _emailKey.currentState!.isValid;
+                    _emailKey.currentState?.validate();
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  decoration:
+                      kinputdecoration.copyWith(hintText: 'Enter your email'),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextFormField(
+                  controller: passwordcontroller,
+                  key: _passwordKey,
+                  textAlign: TextAlign.center,
+                  obscureText: true,
+                  onChanged: (value) {
+                    _isButtonDisabled = _passwordKey.currentState!.isValid;
+                    _passwordKey.currentState?.validate();
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  decoration: kinputdecoration.copyWith(
+                      hintText: 'Enter your password.'),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                BlocConsumer<LoginCubit, LoginState>(
+                    listener: (context, state) {
+                  if (state is LoginSuccess) {
+                    Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => signup()),
-                      );
-                    },
-                    child: Text(
-                      'Sign up',
-                      style: TextStyle(color: blue),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class detials extends StatefulWidget {
-  static const String id = 'login_screen';
-  @override
-  _detialsState createState() => _detialsState();
-}
-
-class _detialsState extends State<detials> {
-  String message = '';
-  bool showstate = false;
-  final _auth = FirebaseAuth.instance;
-  String email = '';
-  String password = '';
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: ModalProgressHUD(
-        inAsyncCall: showstate,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Center(
-                child: Text(
-                  'LOGIN',
-                  style: TextStyle(
-                      color: blue, fontSize: 50.0, fontWeight: FontWeight.w600),
-                ),
-              ),
-              SizedBox(
-                height: 48.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {
-                  email = value;
-                },
-                decoration:
-                    kinputdecoration.copyWith(hintText: 'Enter your email'),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                obscureText: true,
-                onChanged: (value) {
-                  password = value;
-                },
-                decoration:
-                    kinputdecoration.copyWith(hintText: 'Enter your password.'),
-              ),
-              SizedBox(
-                height: 24.0,
-              ),
-              text_app(
-                colors: blue,
-                onPress: () async {
-                  try {
-                    setState(() {
-                      showstate = true;
-                    });
-                    await Firebase.initializeApp();
-                    final loginuser = await _auth.signInWithEmailAndPassword(
-                        email: email, password: password);
-                    /*if (loginuser != null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => )));
-                    }*/
-                    setState(() {
-                      showstate = false;
-                    });
-                  } catch (e) {
-                    print(e);
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                firstscreen2(camera: widget.camera)));
                   }
-                },
-                text: 'Log in',
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/*
-class details extends StatefulWidget {
-  const details({Key? key}) : super(key: key);
-
-  @override
-  State<details> createState() => _detailsState();
-}
-
-class _detailsState extends State<details> {
-  TextEditingController _name = TextEditingController();
-  TextEditingController _contact = TextEditingController();
-  TextEditingController _address = TextEditingController();
-  TextEditingController _allergies = TextEditingController();
-  TextEditingController _poc = TextEditingController();
-  TextEditingController _bloodgroup = TextEditingController();
-  late SharedPreferences sharedPreferences;
-  @override
-  void initState() {
-    super.initState();
-    saveddata();
-  }
-
-  void saveddata() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    Map<String, dynamic> jsondata =
-        jsonDecode(sharedPreferences.getString('userdata')!);
-    User user = User.fromJson(jsondata);
-    if (jsondata.isNotEmpty) {
-      _name.value = TextEditingValue(text: user.name);
-      _contact.value = TextEditingValue(text: user.contact);
-      _address.value = TextEditingValue(text: user.address);
-      _allergies.value = TextEditingValue(text: user.allergy);
-      _poc.value = TextEditingValue(text: user.POC);
-      _bloodgroup.value = TextEditingValue(text: user.bloodgroup);
-    }
-  }
-
-  void storedata() {
-    User user = User(_name.text, _contact.text, _address.text, _allergies.text,
-        _poc.text, _bloodgroup.text);
-    String userdata = jsonEncode(user);
-    print(userdata);
-    sharedPreferences.setString('userdata', userdata);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: blue,
-          title: Center(
-            child: Text(
-              "Daily reminder",
-              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w400),
-            ),
-          ),
-        ),
-        body: ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _name,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your Name'),
-                  ),
-                  SizedBox(height: 15.0),
-                  TextField(
-                    controller: _contact,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your contact number'),
-                  ),
-                  SizedBox(height: 15.0),
-                  TextField(
-                    controller: _address,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your address'),
-                  ),
-                  SizedBox(height: 15.0),
-                  TextField(
-                    controller: _allergies,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your allergies'),
-                  ),
-                  SizedBox(height: 15.0),
-                  TextField(
-                    controller: _poc,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your POC'),
-                  ),
-                  SizedBox(height: 15.0),
-                  TextField(
-                    controller: _bloodgroup,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your Blood Group'),
-                  ),
-                  SizedBox(height: 25.0),
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          color: blue,
-                        ),
-                        height: 70,
-                        width: 175,
-                        child: ElevatedButton(
-                          onPressed: storedata,
-                          child: Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontFamily: 'SourceSansPro'),
-                            ),
-                          ),
-                        ),
+                  if (state is LoginError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Enter valid Data'),
+                        backgroundColor: Colors.red,
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          color: blue,
+                    );
+                  }
+                }, builder: (context, state) {
+                  if (state is LoginLoading) {
+                    return const loadingscreen();
+                  }
+                  return Column(children: [
+                    text_app(
+                      text: 'LOGIN',
+                      colors: blue,
+                      onPress: () {
+                        setState(() {
+                          !_isButtonDisabled
+                              ? null
+                              : () {
+                                  context.read<LoginCubit>().login(
+                                      emailcontroller.text,
+                                      passwordcontroller.text);
+                                };
+                        });
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Don\'t have an account    ",
+                          style: TextStyle(color: blue),
                         ),
-                        height: 70,
-                        width: 175,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            sharedPreferences.remove('userdata');
-                            _name.value = TextEditingValue(text: '');
-                            _contact.value = TextEditingValue(text: '');
-                            _address.value = TextEditingValue(text: '');
-                            _allergies.value = TextEditingValue(text: '');
-                            _bloodgroup.value = TextEditingValue(text: '');
-                            _poc.value = TextEditingValue(text: '');
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Signup()),
+                            );
                           },
-                          child: Center(
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                  fontFamily: 'SourceSansPro'),
-                            ),
+                          child: Text(
+                            'Sign up',
+                            style: TextStyle(color: blue),
                           ),
                         ),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                        SizedBox(
+                          width: 10.0,
+                        )
+                      ],
+                    ),
+                  ]);
+                }),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-class User {
-  String name, contact, address, allergy, POC, bloodgroup;
-  User(this.name, this.contact, this.address, this.allergy, this.POC,
-      this.bloodgroup);
-  User.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        contact = json['contact'],
-        address = json['address'],
-        allergy = json['allergy'],
-        POC = json['POC'],
-        bloodgroup = json['bloodgroup'];
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'contact': contact,
-        'address': address,
-        'allergy': allergy,
-        'POC': POC,
-        'bloodgroup': bloodgroup,
-      };
-}
-*/
 class text_app extends StatelessWidget {
   final Color? colors;
   final VoidCallback? onPress;

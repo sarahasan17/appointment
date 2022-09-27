@@ -13,9 +13,15 @@ import 'package:camera/camera.dart';
 import 'package:appointment/main.dart';
 import 'dart:ffi';
 
-class firstscreen2 extends StatelessWidget {
+class firstscreen2 extends StatefulWidget {
   final CameraDescription camera;
-  firstscreen2({required this.camera});
+  const firstscreen2({Key? key, required this.camera}) : super(key: key);
+
+  @override
+  State<firstscreen2> createState() => _firstscreen2State();
+}
+
+class _firstscreen2State extends State<firstscreen2> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,7 +53,8 @@ class firstscreen2 extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => details()),
+                                  builder: (context) =>
+                                      details(camera: widget.camera)),
                             );
                           },
                           child: Icon(
@@ -69,7 +76,7 @@ class firstscreen2 extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  scan_prescription(camera: camera)),
+                                  scan_prescription(camera: widget.camera)),
                         );
                       },
                     ),

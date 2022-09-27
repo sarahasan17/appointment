@@ -3,106 +3,179 @@ import 'package:appointment/firstscreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:appointment/requests/signup_request.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:camera/camera.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:appointment/requests/cubit.dart';
+import 'package:appointment/requests/signup_request.dart';
 
-class signup extends StatefulWidget {
-  const signup({Key? key}) : super(key: key);
+class Signup extends StatefulWidget {
+  const Signup({Key? key}) : super(key: key);
 
   @override
-  State<signup> createState() => _signupState();
+  State<Signup> createState() => _SignupState();
 }
 
-class _signupState extends State<signup> {
-  @override
+class _SignupState extends State<Signup> {
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController age = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController passwordConfirm = TextEditingController();
+  final GlobalKey<FormFieldState> _nameKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _emailKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _phoneKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _ageKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _passwordKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _passwordConfirmKey =
+      GlobalKey<FormFieldState>();
+  bool _isButtonDisabled = false;
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: blue,
-          title: Center(
-            child: Text(
-              "Daily reminder",
-              style: TextStyle(
-                  fontSize: 25.0, fontWeight: FontWeight.w600, color: white),
+      home: BlocProvider(
+        create: (context) => SignupCubit(),
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: blue,
+            title: const Center(
+              child: Text(
+                "Daily reminder",
+                style: TextStyle(
+                    fontSize: 25.0, fontWeight: FontWeight.w600, color: white),
+              ),
             ),
           ),
-        ),
-        body: Container(
-          padding: EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Center(
-                child: Text(
-                  'SIGN UP',
-                  style: TextStyle(
-                      color: blue, fontSize: 50.0, fontWeight: FontWeight.w600),
+          body: Container(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Center(
+                  child: Text(
+                    'SIGN UP',
+                    style: TextStyle(
+                      color: blue,
+                      fontSize: 50.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 48.0,
-              ),
-              TextField(
-                textAlign: TextAlign.left,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
-                decoration:
-                    kinputdecoration.copyWith(hintText: 'Enter your name'),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                textAlign: TextAlign.left,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
-                decoration:
-                    kinputdecoration.copyWith(hintText: 'Enter your email'),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                textAlign: TextAlign.left,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
-                decoration:
-                    kinputdecoration.copyWith(hintText: 'Enter your age'),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                textAlign: TextAlign.left,
-                obscureText: true,
-                onChanged: (value) {},
-                decoration:
-                    kinputdecoration.copyWith(hintText: 'Enter your password.'),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                textAlign: TextAlign.left,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
-                decoration: kinputdecoration.copyWith(
-                    hintText: 'Confirm your password'),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              text_app(
-                text: 'SIGN UP',
-                colors: blue,
-              ),
-            ],
+                const SizedBox(
+                  height: 48.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.left,
+                  key: _nameKey,
+                  keyboardType: TextInputType.name,
+                  onChanged: (value) {
+                    _isButtonDisabled = _nameKey.currentState!.isValid;
+                    _nameKey.currentState?.validate();
+                    validator:
+                    (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                    };
+                  },
+                  decoration:
+                      kinputdecoration.copyWith(hintText: 'Enter your name'),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.left,
+                  key: _emailKey,
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) {
+                    _isButtonDisabled = _emailKey.currentState!.isValid;
+                    _emailKey.currentState?.validate();
+                    validator:
+                    (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                    };
+                  },
+                  decoration:
+                      kinputdecoration.copyWith(hintText: 'Enter your email'),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.left,
+                  key: _ageKey,
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    _isButtonDisabled = _ageKey.currentState!.isValid;
+                    _ageKey.currentState?.validate();
+                    validator:
+                    (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      ;
+                    };
+                  },
+                  decoration:
+                      kinputdecoration.copyWith(hintText: 'Enter your age'),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.left,
+                  key: _passwordKey,
+                  obscureText: true,
+                  onChanged: (value) {
+                    _isButtonDisabled = _passwordKey.currentState!.isValid;
+                    _passwordKey.currentState?.validate();
+                    validator:
+                    (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      ;
+                    };
+                  },
+                  decoration: kinputdecoration.copyWith(
+                      hintText: 'Enter your password.'),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.left,
+                  key: _passwordConfirmKey,
+                  obscureText: true,
+                  onChanged: (value) {
+                    _isButtonDisabled =
+                        _passwordConfirmKey.currentState!.isValid;
+                    _passwordConfirmKey.currentState?.validate();
+                    validator:
+                    (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                    };
+                  },
+                  decoration: kinputdecoration.copyWith(
+                      hintText: 'Confirm your password'),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Text_app(
+                  text: 'SIGN UP',
+                  colors: blue,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -110,15 +183,15 @@ class _signupState extends State<signup> {
   }
 }
 
-class text_app extends StatelessWidget {
+class Text_app extends StatelessWidget {
   final Color? colors;
   final VoidCallback? onPress;
   final String text;
-  text_app({this.colors, this.onPress, this.text = ''});
+  Text_app({this.colors, this.onPress, this.text = ''});
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Material(
         elevation: 5.0,
         color: colors,
@@ -129,7 +202,7 @@ class text_app extends StatelessWidget {
           height: 42.0,
           child: Text(
             text,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),
