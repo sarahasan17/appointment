@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:appointment/firstscreen2.dart';
+import 'package:appointment/screen1/firstscreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:appointment/signup.dart';
+import 'package:appointment/screen1/signup.dart';
 import 'package:appointment/requests/api_call.dart';
 import 'package:appointment/requests/signup_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
