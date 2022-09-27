@@ -2,14 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-const IconData access_time_outlined =
-    IconData(0xee2d, fontFamily: 'MaterialIcons');
-
-class appointment_reminder extends StatelessWidget {
+class Appointment_reminder extends StatelessWidget {
   @override
   final String date;
   final String fromtime;
@@ -18,7 +12,7 @@ class appointment_reminder extends StatelessWidget {
   final VoidCallback? onClicked2;
   final VoidCallback? onClicked3;
   final VoidCallback? onClicked4;
-  appointment_reminder(
+  Appointment_reminder(
       {this.date = 'Add date',
       this.fromtime = 'Add date',
       this.totime = 'Add date',
@@ -32,7 +26,7 @@ class appointment_reminder extends StatelessWidget {
         home: Scaffold(
       appBar: AppBar(
         backgroundColor: blue,
-        title: Center(
+        title: const Center(
           child: Text(
             "Daily reminder",
             style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w400),
@@ -40,21 +34,21 @@ class appointment_reminder extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Doctor name',
                     style: TextStyle(
                         fontSize: 30.0,
                         color: blue,
                         fontWeight: FontWeight.w600),
                   ),
-                  Text(
+                  const Text(
                     'profession',
                     style: TextStyle(
                         fontSize: 20.0,
@@ -68,7 +62,7 @@ class appointment_reminder extends StatelessWidget {
                     allowHalfRating: true,
                     itemCount: 5,
                     itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
+                    itemBuilder: (context, _) => const Icon(
                       Icons.star,
                       color: Colors.amber,
                     ),
@@ -95,17 +89,17 @@ class appointment_reminder extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.calendar_month,
                       color: blue,
                       size: 25.0,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 12.0,
                     ),
                     Text(
                       date,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18.0,
                           color: blue,
@@ -113,27 +107,27 @@ class appointment_reminder extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: onClicked,
-                      child: Icon(Icons.arrow_drop_down_sharp,
+                      child: const Icon(Icons.arrow_drop_down_sharp,
                           color: blue, size: 25),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 Row(
                   children: [
-                    Icon(
-                      access_time_outlined,
+                    const Icon(
+                      Access_time_outlined,
                       color: blue,
                       size: 25.0,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 12.0,
                     ),
                     Text(
                       fromtime,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18.0,
                           color: blue,
@@ -141,12 +135,12 @@ class appointment_reminder extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: onClicked2,
-                      child: Icon(Icons.arrow_drop_down_sharp,
+                      child: const Icon(Icons.arrow_drop_down_sharp,
                           color: blue, size: 25),
                     ),
                     Text(
                       totime,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18.0,
                           color: blue,
@@ -154,7 +148,7 @@ class appointment_reminder extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: onClicked3,
-                      child: Icon(Icons.arrow_drop_down_sharp,
+                      child: const Icon(Icons.arrow_drop_down_sharp,
                           color: blue, size: 25),
                     ),
                   ],
@@ -162,7 +156,7 @@ class appointment_reminder extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           Row(
@@ -172,8 +166,8 @@ class appointment_reminder extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                   color: blue,
                 ),
-                padding: EdgeInsets.all(13.0),
-                child: Text(
+                padding: const EdgeInsets.all(13.0),
+                child: const Text(
                   'Set Alarm',
                   style: TextStyle(
                       color: Colors.white,
@@ -181,7 +175,7 @@ class appointment_reminder extends StatelessWidget {
                       fontSize: 20.0),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 25.0,
               ),
               GestureDetector(
@@ -191,8 +185,8 @@ class appointment_reminder extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                     color: blue,
                   ),
-                  padding: EdgeInsets.all(13.0),
-                  child: Text(
+                  padding: const EdgeInsets.all(13.0),
+                  child: const Text(
                     'Reschedule',
                     style: TextStyle(
                         color: Colors.white,
@@ -217,22 +211,21 @@ class Buildwidget extends StatefulWidget {
 }
 
 class _BuildwidgetState extends State<Buildwidget> {
-  @override
   DateTime? date;
   TimeOfDay? time;
   TimeOfDay? time2;
   String getText() {
-    if (date == null)
+    if (date == null) {
       return 'Select date';
-    else {
+    } else {
       return DateFormat('dd/MM/yyyy').format(date!);
     }
   }
 
   String getText2() {
-    if (time == null)
+    if (time == null) {
       return 'Add time';
-    else {
+    } else {
       final hours = time?.hour.toString().padLeft(2, '0');
       final min = time?.minute.toString().padLeft(2, '0');
       return '${hours}:${min}';
@@ -240,28 +233,28 @@ class _BuildwidgetState extends State<Buildwidget> {
   }
 
   String getText3() {
-    if (time2 == null)
+    if (time2 == null) {
       return 'Add time';
-    else {
+    } else {
       final hours = time2?.hour.toString().padLeft(2, '0');
       final min = time2?.minute.toString().padLeft(2, '0');
-      return '${hours}:${min}';
+      return '$hours:$min';
     }
   }
 
 //'${date?.day}/${date?.month}/${date?.year}'//
-  Widget build(BuildContext context) => appointment_reminder(
+  @override
+  Widget build(BuildContext context) => Appointment_reminder(
         date: getText(),
         fromtime: getText2(),
         totime: getText3(),
-        onClicked: () => pickdate(context),
-        onClicked2: () => picktime1(context),
-        onClicked3: () => picktime2(context),
+        onClicked: () => Pickdate(context),
+        onClicked2: () => Picktime1(context),
+        onClicked3: () => Picktime2(context),
         onClicked4: () => clearDatetime(context),
       );
 
-  Future pickdate(BuildContext context) async {
-    final initialdate = DateTime.now();
+  Future Pickdate(BuildContext context) async {
     final showdate = await showDatePicker(
       context: context,
       initialDate: date ?? DateTime.now(),
@@ -272,7 +265,7 @@ class _BuildwidgetState extends State<Buildwidget> {
     setState(() => date = showdate);
   }
 
-  Future picktime1(BuildContext context) async {
+  Future Picktime1(BuildContext context) async {
     final initialtime =
         TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
     final newtime = await showTimePicker(
@@ -281,7 +274,7 @@ class _BuildwidgetState extends State<Buildwidget> {
     setState(() => time = newtime);
   }
 
-  Future picktime2(BuildContext context) async {
+  Future Picktime2(BuildContext context) async {
     final initialtime = TimeOfDay(hour: 9, minute: 0);
     final newtime = await showTimePicker(
         context: context, initialTime: time2 ?? initialtime);

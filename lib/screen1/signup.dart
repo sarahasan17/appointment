@@ -1,15 +1,7 @@
-import 'dart:convert';
-import 'package:appointment/firstscreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:appointment/requests/signup_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:camera/camera.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:appointment/requests/cubit.dart';
-import 'package:appointment/requests/signup_request.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -87,7 +79,7 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                TextField(
+                TextFormField(
                   textAlign: TextAlign.left,
                   key: _emailKey,
                   keyboardType: TextInputType.emailAddress,
@@ -107,7 +99,7 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                TextField(
+                TextFormField(
                   textAlign: TextAlign.left,
                   key: _ageKey,
                   keyboardType: TextInputType.number,
@@ -128,7 +120,7 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                TextField(
+                TextFormField(
                   textAlign: TextAlign.left,
                   key: _passwordKey,
                   obscureText: true,
@@ -140,7 +132,6 @@ class _SignupState extends State<Signup> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
                       }
-                      ;
                     };
                   },
                   decoration: kinputdecoration.copyWith(

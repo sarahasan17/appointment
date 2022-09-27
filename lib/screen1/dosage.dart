@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
 
-class dosage extends StatelessWidget {
+class Dosage_medicine extends StatelessWidget {
   final String name;
   final String unit;
   final String Dosage;
 
-  dosage(
+  const Dosage_medicine(
       {this.name = "Add name",
       this.unit = "Add unit",
       this.Dosage = "Add Dosage"});
@@ -16,7 +16,7 @@ class dosage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: blue,
-          title: Center(
+          title: const Center(
             child: Text(
               "Daily reminder",
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w400),
@@ -24,33 +24,33 @@ class dosage extends StatelessWidget {
           ),
         ),
         body: Container(
-          decoration: BoxDecoration(),
-          padding: EdgeInsets.all(20.0),
+          decoration: const BoxDecoration(),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Name:   $name',
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'SourceSansPro',
                     fontWeight: FontWeight.w500,
                     fontSize: 30.0,
                     color: blue),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 'Unit:   $unit',
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'SourceSansPro', fontSize: 30.0, color: blue),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 'Dosage:   $Dosage',
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: 'SourceSansPro', fontSize: 30.0, color: blue),
               ),
             ],

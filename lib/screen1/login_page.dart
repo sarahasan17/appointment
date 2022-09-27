@@ -17,7 +17,7 @@ class loadingscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircularProgressIndicator(
+    return const CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(blue),
     );
   }
@@ -44,6 +44,7 @@ class _detailsState extends State<details> {
   final GlobalKey<FormFieldState> _passwordKey = GlobalKey<FormFieldState>();
   bool _isButtonDisabled = false;
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
@@ -51,7 +52,7 @@ class _detailsState extends State<details> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: blue,
-            title: Center(
+            title: const Center(
               child: Text(
                 "Daily reminder",
                 style: TextStyle(
@@ -60,21 +61,22 @@ class _detailsState extends State<details> {
             ),
           ),
           body: Container(
-            padding: EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Center(
+                const Center(
                   child: Text(
-                    'LOGIN',
+                    'LOG IN',
                     style: TextStyle(
+                        fontFamily: 'SourceSansPro-Regular',
                         color: blue,
                         fontSize: 50.0,
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 48.0,
                 ),
                 TextFormField(
@@ -94,7 +96,7 @@ class _detailsState extends State<details> {
                   decoration:
                       kinputdecoration.copyWith(hintText: 'Enter your email'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 TextFormField(
@@ -114,7 +116,7 @@ class _detailsState extends State<details> {
                   decoration: kinputdecoration.copyWith(
                       hintText: 'Enter your password.'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 BlocConsumer<LoginCubit, LoginState>(
@@ -124,11 +126,11 @@ class _detailsState extends State<details> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                firstscreen2(camera: widget.camera)));
+                                Firstscreen2(camera: widget.camera)));
                   }
                   if (state is LoginError) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Enter valid Data'),
                         backgroundColor: Colors.red,
                       ),
@@ -138,47 +140,50 @@ class _detailsState extends State<details> {
                   if (state is LoginLoading) {
                     return const loadingscreen();
                   }
-                  return Column(children: [
-                    text_app(
-                      text: 'LOGIN',
-                      colors: blue,
-                      onPress: () {
-                        setState(() {
-                          !_isButtonDisabled
-                              ? null
-                              : () {
-                                  context.read<LoginCubit>().login(
-                                      emailcontroller.text,
-                                      passwordcontroller.text);
-                                };
-                        });
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                  return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          "Don\'t have an account    ",
-                          style: TextStyle(color: blue),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Signup()),
-                            );
+                        text_app(
+                          text: 'LOG IN',
+                          colors: blue,
+                          onPress: () {
+                            setState(() {
+                              !_isButtonDisabled
+                                  ? null
+                                  : () {
+                                      context.read<LoginCubit>().login(
+                                          emailcontroller.text,
+                                          passwordcontroller.text);
+                                    };
+                            });
                           },
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(color: blue),
-                          ),
                         ),
-                        SizedBox(
-                          width: 10.0,
-                        )
-                      ],
-                    ),
-                  ]);
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text(
+                              "Don\'t have an account    ",
+                              style: TextStyle(color: blue),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Signup()),
+                                );
+                              },
+                              child: const Text(
+                                'Sign up',
+                                style: TextStyle(color: blue),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10.0,
+                            )
+                          ],
+                        ),
+                      ]);
                 }),
               ],
             ),
@@ -197,7 +202,7 @@ class text_app extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Material(
         elevation: 5.0,
         color: colors,
@@ -208,7 +213,9 @@ class text_app extends StatelessWidget {
           height: 42.0,
           child: Text(
             text,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),

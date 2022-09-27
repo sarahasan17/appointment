@@ -1,21 +1,16 @@
-import 'dart:ffi';
 import 'dart:ui' as ui;
-//import 'dart:html';
-import 'dart:convert';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
-import 'package:path/path.dart';
-import 'package:appointment/uploads.dart';
+import 'package:appointment/screen1/uploads.dart';
 
-class view_prescription extends StatefulWidget {
-  const view_prescription({Key? key}) : super(key: key);
+class View_prescription extends StatefulWidget {
+  const View_prescription({Key? key}) : super(key: key);
 
   @override
-  State<view_prescription> createState() => _view_prescriptionState();
+  State<View_prescription> createState() => _View_prescriptionState();
 }
 
-class _view_prescriptionState extends State<view_prescription> {
+class _View_prescriptionState extends State<View_prescription> {
   @override
   //late File file;
   Widget build(BuildContext context) {
@@ -24,7 +19,7 @@ class _view_prescriptionState extends State<view_prescription> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: blue,
-          title: Center(
+          title: const Center(
             child: Text(
               "Daily reminder",
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w400),
@@ -32,11 +27,11 @@ class _view_prescriptionState extends State<view_prescription> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 '19-09-2022',
                 style: TextStyle(
                     color: blue,
@@ -44,18 +39,18 @@ class _view_prescriptionState extends State<view_prescription> {
                     fontFamily: 'IBMPlexSansCondensed',
                     fontWeight: FontWeight.w400),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               Container(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0), color: light),
                 child: Row(
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text('DOCTOR NAME',
                             style: TextStyle(
                                 color: blue,
@@ -70,17 +65,17 @@ class _view_prescriptionState extends State<view_prescription> {
                                 fontWeight: FontWeight.w400)),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 90.0,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => uploads()));
+                            MaterialPageRoute(builder: (context) => Uploads()));
                       },
                       child: Container(
                         color: blue,
-                        child: Icon(
+                        child: const Icon(
                           Icons.add,
                           color: light,
                           size: 40.0,

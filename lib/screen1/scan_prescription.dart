@@ -6,17 +6,17 @@ import 'package:camera/camera.dart';
 import 'package:appointment/constants.dart';
 
 // A screen that allows users to take a picture using a given camera.
-class scan_prescription extends StatefulWidget {
-  const scan_prescription({
+class Scan_prescription extends StatefulWidget {
+  const Scan_prescription({
     required this.camera,
   });
 
   final CameraDescription camera;
   @override
-  scan_prescriptionState createState() => scan_prescriptionState();
+  Scan_prescriptionState createState() => Scan_prescriptionState();
 }
 
-class scan_prescriptionState extends State<scan_prescription> {
+class Scan_prescriptionState extends State<Scan_prescription> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
@@ -49,8 +49,8 @@ class scan_prescriptionState extends State<scan_prescription> {
       backgroundColor: blue,
       appBar: AppBar(
           backgroundColor: blue,
-          title: Center(
-            child: const Text('Daily Reminder'),
+          title: const Center(
+            child: Text('Daily Reminder'),
           )),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
@@ -58,7 +58,7 @@ class scan_prescriptionState extends State<scan_prescription> {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: FutureBuilder<void>(
               future: _initializeControllerFuture,
               builder: (context, snapshot) {
@@ -72,7 +72,7 @@ class scan_prescriptionState extends State<scan_prescription> {
               },
             ),
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           CircleAvatar(
             radius: 35,
             backgroundColor: white,

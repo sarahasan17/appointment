@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:appointment/requests/signup_request.dart';
-import 'package:appointment/signup.dart';
+import 'package:appointment/screen1/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
@@ -10,6 +10,7 @@ import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:appointment/requests/api_call.dart';
 
+//loginCubit
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
   final LoginRepo _loginRepo = LoginRepo();
@@ -20,6 +21,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 }
 
+//signup
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit() : super(SignupInitial());
 }

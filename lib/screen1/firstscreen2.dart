@@ -1,34 +1,34 @@
-import 'package:appointment/appointment_reminder.dart';
-import 'package:appointment/reports.dart';
+import 'package:appointment/screen1/appointment_reminder.dart';
+import 'package:appointment/screen1/reports.dart';
 import 'package:appointment/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/screen1/buttons.dart';
-import 'package:appointment/view_prescription.dart';
-import 'package:appointment/view_medicine.dart';
-import 'package:appointment/view_best_medicine.dart';
+import 'package:appointment/screen1/view_prescription.dart';
+import 'package:appointment/screen1/view_medicine.dart';
+import 'package:appointment/screen1/view_best_medicine.dart';
 import 'package:unicons/unicons.dart';
-import 'package:appointment/details.dart';
-import 'package:appointment/scan_prescription.dart';
+import 'package:appointment/screen1/login_page.dart';
+import 'package:appointment/screen1/scan_prescription.dart';
 import 'package:camera/camera.dart';
 import 'package:appointment/main.dart';
 import 'dart:ffi';
 
-class firstscreen2 extends StatefulWidget {
+class Firstscreen2 extends StatefulWidget {
   final CameraDescription camera;
-  const firstscreen2({Key? key, required this.camera}) : super(key: key);
+  const Firstscreen2({Key? key, required this.camera}) : super(key: key);
 
   @override
-  State<firstscreen2> createState() => _firstscreen2State();
+  State<Firstscreen2> createState() => _Firstscreen2State();
 }
 
-class _firstscreen2State extends State<firstscreen2> {
+class _Firstscreen2State extends State<Firstscreen2> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
             backgroundColor: white,
-            title: Center(
+            title: const Center(
               child: Text(
                 "Daily reminder",
                 style: TextStyle(
@@ -38,16 +38,16 @@ class _firstscreen2State extends State<firstscreen2> {
           ),
           body: ListView(children: [
             Container(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
               color: blue,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        textpart(text: 'Hello Users!'),
+                        textpart(text: ' Hello Users!'),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -57,7 +57,7 @@ class _firstscreen2State extends State<firstscreen2> {
                                       details(camera: widget.camera)),
                             );
                           },
-                          child: Icon(
+                          child: const Icon(
                             UniconsLine.apps,
                             size: 50.0,
                             color: white,
@@ -65,81 +65,96 @@ class _firstscreen2State extends State<firstscreen2> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15.0,
                     ),
-                    buttons3(
-                      text1: 'Scan Prescription',
-                      icon: Icons.document_scanner_outlined,
-                      onpressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  scan_prescription(camera: widget.camera)),
-                        );
-                      },
+                    Center(
+                      child: Buttons3(
+                        text1: 'Scan Prescription',
+                        icon: Icons.document_scanner_outlined,
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Scan_prescription(camera: widget.camera)),
+                          );
+                        },
+                      ),
                     ),
-                    SizedBox(height: 10.0),
-                    buttons3(
-                      text1: 'View Prescription',
-                      icon: Icons.view_carousel_rounded,
-                      onpressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const view_prescription()),
-                        );
-                      },
+                    const SizedBox(height: 10.0),
+                    Center(
+                      child: Buttons3(
+                        text1: 'View Prescription',
+                        icon: Icons.view_carousel_rounded,
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const View_prescription()),
+                          );
+                        },
+                      ),
                     ),
-                    SizedBox(height: 10.0),
-                    buttons3(
-                      text1: 'Appointment Reminder',
-                      icon: Icons.lock_clock,
-                      onpressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Buildwidget()),
-                        );
-                      },
+                    const SizedBox(height: 10.0),
+                    Center(
+                      child: Buttons3(
+                        text1: 'Appointment Reminder',
+                        icon: Icons.lock_clock,
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Buildwidget()),
+                          );
+                        },
+                      ),
                     ),
-                    SizedBox(height: 10.0),
-                    buttons3(
-                      text1: 'View Medicine',
-                      icon: Icons.medical_information_rounded,
-                      onpressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => view_medicine()),
-                        );
-                      },
+                    const SizedBox(height: 10.0),
+                    Center(
+                      child: Buttons3(
+                        text1: 'View Medicine',
+                        icon: Icons.medical_information_rounded,
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => View_medicine()),
+                          );
+                        },
+                      ),
                     ),
-                    SizedBox(height: 10.0),
-                    textpart(text: 'Get Best Deals!'),
-                    SizedBox(height: 10.0),
-                    buttons3(
-                      text1: 'View Best Medicine',
-                      icon: Icons.add_to_photos_rounded,
-                      onpressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const view_best_medicine()),
-                        );
-                      },
+                    const SizedBox(height: 10.0),
+                    textpart(text: ' Get Best Deals!'),
+                    const SizedBox(height: 10.0),
+                    Center(
+                      child: Buttons3(
+                        text1: 'View Best Medicine',
+                        icon: Icons.add_to_photos_rounded,
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const View_best_medicine()),
+                          );
+                        },
+                      ),
                     ),
-                    SizedBox(height: 10.0),
-                    buttons3(
-                      text1: 'Reports',
-                      icon: Icons.file_copy_outlined,
-                      onpressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => reports()),
-                        );
-                      },
+                    const SizedBox(height: 10.0),
+                    Center(
+                      child: Buttons3(
+                        text1: 'Reports',
+                        icon: Icons.file_copy_outlined,
+                        onpressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Reports()),
+                          );
+                        },
+                      ),
                     ),
                   ]),
             ),

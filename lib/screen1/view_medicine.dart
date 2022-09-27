@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
-import 'package:appointment/dosage.dart';
+import 'package:appointment/screen1/dosage.dart';
 
-class view_medicine extends StatefulWidget {
+class View_medicine extends StatefulWidget {
   @override
-  State<view_medicine> createState() => _view_medicineState();
+  State<View_medicine> createState() => _View_medicineState();
 }
 
-class _view_medicineState extends State<view_medicine> {
+class _View_medicineState extends State<View_medicine> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
         backgroundColor: blue,
-        title: Text(
+        title: const Text(
           "Daily reminder",
           style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w400),
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(padding: EdgeInsets.all(10.0)),
-            Text(
+            const Padding(padding: EdgeInsets.all(10.0)),
+            const Text(
               'Your Medication',
               style: TextStyle(
                   fontSize: 30.0,
@@ -33,11 +33,11 @@ class _view_medicineState extends State<view_medicine> {
                   fontWeight: FontWeight.w600,
                   color: blue),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: light,
@@ -45,7 +45,7 @@ class _view_medicineState extends State<view_medicine> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: 10.0),
+                  const SizedBox(width: 10.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -53,17 +53,19 @@ class _view_medicineState extends State<view_medicine> {
                       text_med(text: "Dosage"),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 200.0,
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => dosage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Dosage_medicine()));
                     },
                     child: Container(
                       color: blue,
-                      child: Icon(
+                      child: const Icon(
                         Icons.add,
                         color: light,
                         size: 35.0,
@@ -88,7 +90,7 @@ class text_med extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 25.0,
         fontFamily: 'SourceSansPro',
         fontWeight: FontWeight.w700,

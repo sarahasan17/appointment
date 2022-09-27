@@ -1,3 +1,4 @@
+//signupRequest
 class SignupRequest {
   SignupRequest({
     this.name,
@@ -34,6 +35,7 @@ class SignupRequest {
       };
 }
 
+//signupState
 abstract class SignupState {}
 
 class SignupInitial extends SignupState {}
@@ -52,6 +54,7 @@ class SignupError extends SignupState {
   SignupError(this.msg);
 }
 
+//loginState
 abstract class LoginState {}
 
 class LoginInitial extends LoginState {}
@@ -68,6 +71,7 @@ class LoginError extends LoginState {
   LoginError(this.msg);
 }
 
+//SignupResponse
 class SignupResponse {
   SignupResponse({
     required this.message,

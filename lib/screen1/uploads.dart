@@ -1,19 +1,14 @@
-import 'dart:ui' as ui;
-//import 'dart:html';
-import 'dart:convert';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
-import 'package:path/path.dart';
 
-class uploads extends StatefulWidget {
-  const uploads({Key? key}) : super(key: key);
+class Uploads extends StatefulWidget {
+  const Uploads({Key? key}) : super(key: key);
 
   @override
-  State<uploads> createState() => _uploadsState();
+  State<Uploads> createState() => _UploadsState();
 }
 
-class _uploadsState extends State<uploads> {
+class _UploadsState extends State<Uploads> {
   @override
   //late File file;
   Widget build(BuildContext context) {
@@ -22,17 +17,15 @@ class _uploadsState extends State<uploads> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: blue,
-          title: Center(
+          title: const Center(
             child: Text(
               "Daily reminder",
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w400),
             ),
           ),
         ),
-        body: Container(
-          child: ListView(
-            children: [Text('UPLOADS:')],
-          ),
+        body: ListView(
+          children: [Text('UPLOADS:')],
         ),
       ),
     );

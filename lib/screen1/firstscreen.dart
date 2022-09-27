@@ -1,27 +1,29 @@
-import 'package:appointment/appointment_reminder.dart';
-import 'package:appointment/reports.dart';
+import 'package:appointment/screen1/appointment_reminder.dart';
+import 'package:appointment/screen1/reports.dart';
 import 'package:appointment/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/screen1/buttons.dart';
-import 'package:appointment/view_prescription.dart';
-import 'package:appointment/view_medicine.dart';
-import 'package:appointment/view_best_medicine.dart';
+import 'package:appointment/screen1/view_prescription.dart';
+import 'package:appointment/screen1/view_medicine.dart';
+import 'package:appointment/screen1/view_best_medicine.dart';
 import 'package:unicons/unicons.dart';
-import 'package:appointment/details.dart';
+import 'package:appointment/screen1/login_page.dart';
 
-class firstscreen extends StatefulWidget {
+class Firstscreen extends StatefulWidget {
+  const Firstscreen({Key? key}) : super(key: key);
+
   @override
-  State<firstscreen> createState() => _firstscreenState();
+  State<Firstscreen> createState() => _FirstscreenState();
 }
 
-class _firstscreenState extends State<firstscreen> {
+class _FirstscreenState extends State<Firstscreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: blue,
-          title: Center(
+          title: const Center(
             child: Text(
               "Daily reminder",
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w400),
@@ -36,7 +38,7 @@ class _firstscreenState extends State<firstscreen> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Text(
                     "Hello users!",
                     style: TextStyle(
@@ -47,30 +49,30 @@ class _firstscreenState extends State<firstscreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
-                  buttons1(
+                  const Buttons1(
                     text1: "Scan",
                     text2: "Prescription",
                   ),
-                  buttons1(
+                  Buttons1(
                     text1: "View",
                     text2: "Prescription",
                     onpressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const view_prescription()),
+                            builder: (context) => const View_prescription()),
                       );
                     },
                   ),
                 ],
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Row(
                 children: [
-                  buttons1(
+                  Buttons1(
                     text1: "Appointment",
                     text2: "Reminder",
                     onpressed: () {
@@ -80,21 +82,21 @@ class _firstscreenState extends State<firstscreen> {
                       );
                     },
                   ),
-                  buttons1(
+                  Buttons1(
                     text1: "View",
                     text2: "Medicine",
                     onpressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => view_medicine()),
+                            builder: (context) => View_medicine()),
                       );
                     },
                   )
                 ],
               ),
               SizedBox(height: 20.0),
-              Text(
+              const Text(
                 "Get best deals!",
                 style: TextStyle(
                     fontSize: 40.0,
@@ -102,27 +104,27 @@ class _firstscreenState extends State<firstscreen> {
                     fontWeight: FontWeight.w500,
                     color: blue),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
-                  buttons1(
+                  Buttons1(
                     text1: "View best",
                     text2: "Medicine",
                     onpressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const view_best_medicine()),
+                            builder: (context) => const View_best_medicine()),
                       );
                     },
                   ),
-                  buttons2(
+                  Buttons2(
                     text1: "Reports",
                     onpressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const reports()),
+                            builder: (context) => const Reports()),
                       );
                     },
                   ),
