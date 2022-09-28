@@ -31,7 +31,7 @@ class _FirstscreenState extends State<Firstscreen> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+          padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,7 +78,8 @@ class _FirstscreenState extends State<Firstscreen> {
                     onpressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Buildwidget()),
+                        MaterialPageRoute(
+                            builder: (context) => const Buildwidget()),
                       );
                     },
                   ),
@@ -95,7 +96,7 @@ class _FirstscreenState extends State<Firstscreen> {
                   )
                 ],
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               const Text(
                 "Get best deals!",
                 style: TextStyle(

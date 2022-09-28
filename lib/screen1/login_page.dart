@@ -1,19 +1,14 @@
-import 'dart:convert';
 import 'package:appointment/screen1/firstscreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:appointment/screen1/signup.dart';
-import 'package:appointment/requests/api_call.dart';
-import 'package:appointment/requests/signup_request.dart';
+import 'package:appointment/auth/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:appointment/requests/cubit.dart';
+import 'package:appointment/auth/cubit.dart';
 
-class loadingscreen extends StatelessWidget {
-  const loadingscreen({Key? key}) : super(key: key);
+class Loadingscreen extends StatelessWidget {
+  const Loadingscreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +22,17 @@ Future part() async {
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
-  return (details(camera: firstCamera));
+  return (Login(camera: firstCamera));
 }
 
-class details extends StatefulWidget {
+class Login extends StatefulWidget {
   final CameraDescription camera;
-  details({required this.camera});
+  Login({required this.camera});
   @override
-  State<details> createState() => _detailsState();
+  State<Login> createState() => _LoginState();
 }
 
-class _detailsState extends State<details> {
+class _LoginState extends State<Login> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   final GlobalKey<FormFieldState> _emailKey = GlobalKey<FormFieldState>();
@@ -138,7 +133,7 @@ class _detailsState extends State<details> {
                   }
                 }, builder: (context, state) {
                   if (state is LoginLoading) {
-                    return const loadingscreen();
+                    return const Loadingscreen();
                   }
                   return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -162,7 +157,7 @@ class _detailsState extends State<details> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             const Text(
-                              "Don\'t have an account    ",
+                              "Don't have an account    ",
                               style: TextStyle(color: blue),
                             ),
                             GestureDetector(

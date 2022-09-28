@@ -1,24 +1,9 @@
 import 'dart:convert';
-import 'package:appointment/requests/signup_request.dart';
-import 'package:appointment/screen1/signup.dart';
+import 'package:appointment/auth/state.dart';
 import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:connectivity/connectivity.dart';
-
-class Api_client {
-  static const baseUrl = 'devjams-production.up.railway.app';
-  final http.Client httpClient;
-  Api_client({required this.httpClient}) : assert(httpClient != null);
-  Future<SignupRequest> fetchData() async {
-    final data = await httpClient.get(Uri.parse(baseUrl));
-    if (data.statusCode != 200) {
-      throw 'Something went wrong';
-    }
-    final dataJson = jsonDecode(data.body);
-    return SignupRequest.fromJson(dataJson);
-  }
-}
 
 //networkinfo
 abstract class NetwrokInfo {

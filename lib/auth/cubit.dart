@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:appointment/requests/signup_request.dart';
+import 'package:appointment/auth/state.dart';
 import 'package:appointment/screen1/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:appointment/requests/api_call.dart';
+import 'package:appointment/auth/api_call.dart';
 
 //loginCubit
 class LoginCubit extends Cubit<LoginState> {
@@ -21,7 +21,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 }
 
-//signup
+//signupcubit
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit() : super(SignupInitial());
 }

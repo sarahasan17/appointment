@@ -69,7 +69,7 @@ class _Firstscreen2State extends State<Firstscreen2> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      details(camera: widget.camera)),
+                                      Login(camera: widget.camera)),
                             );
                           },
                           child: const Icon(

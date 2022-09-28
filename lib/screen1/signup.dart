@@ -1,15 +1,13 @@
 import 'dart:io';
-import 'package:appointment/requests/signup_request.dart';
+import 'package:appointment/auth/state.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:appointment/requests/cubit.dart';
-import 'package:appointment/screen1/login_page.dart';
+import 'package:appointment/auth/cubit.dart';
+import 'package:path_provider/path_provider.dart';
 import 'firstscreen2.dart';
 import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:path/path.dart';
-import 'package:dio/dio.dart';
 import 'package:open_filex/open_filex.dart';
 
 class Loadingscreen extends StatelessWidget {
@@ -223,35 +221,38 @@ class _SignupState extends State<Signup> {
                         const SizedBox(
                           height: 10.0,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Container(
-                              color: blue,
-                              padding: const EdgeInsets.all(10.0),
-                              child: GestureDetector(
-                                child: const Text(
-                                  'UPLOAD PIC',
-                                  style: TextStyle(color: white),
-                                ),
-                                onTap: () async {
-                                  final result =
-                                      await FilePicker.platform.pickFiles();
-                                  if (result == null) return;
-                                  final file = result.files.first;
-                                  openFile(file);
-                                  print('Name: ${file.name}');
-                                  print('Bytes: ${file.bytes}');
-                                  print('Size: ${file.size}');
-                                  print('Extension: ${file.extension}');
-                                  print('Path: ${file.path}');
-                                },
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: blue),
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          padding: const EdgeInsets.all(12.0),
+                          child: GestureDetector(
+                            child: const Center(
+                              child: Text(
+                                'UPLOAD PIC',
+                                style: TextStyle(
+                                    color: blue,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18.0),
                               ),
                             ),
-                          ],
+                            onTap: () async {
+                              final result =
+                                  await FilePicker.platform.pickFiles();
+                              if (result == null) return;
+                              final file = result.files.first;
+                              openFile(file);
+                              print('Name: ${file.name}');
+                              print('Bytes: ${file.bytes}');
+                              print('Size: ${file.size}');
+                              print('Extension: ${file.extension}');
+                              print('Path: ${file.path}');
+                              final newfile = await saveFilepermanently(file);
+                              print('From path:${file.path}');
+                              print('From path:${newfile.path}');
+                            },
+                          ),
                         ),
                         Text_App(
                             text: 'SIGN UP',
@@ -309,6 +310,11 @@ class _SignupState extends State<Signup> {
 
 void openFile(PlatformFile file) {
   OpenFilex.open(file.path!);
+}
+
+Future saveFilepermanently(PlatformFile file) async {
+  final appstorage = await getApplicationDocumentsDirectory();
+  final newFile = File(appstorage.path);
 }
 
 class Text_App extends StatelessWidget {
