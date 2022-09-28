@@ -1,20 +1,20 @@
 //signupRequest
 class SignupRequest {
   SignupRequest({
-    this.name,
-    this.email,
-    this.phone,
-    this.age,
-    this.password,
-    this.passwordConfirm,
+    this.name = '',
+    this.email = '',
+    this.phone = '',
+    this.age = 0,
+    this.password = '',
+    this.passwordConfirm = '',
   });
 
-  final String? name;
-  final String? email;
-  final String? phone;
-  final int? age;
-  final String? password;
-  final String? passwordConfirm;
+  final String name;
+  final String email;
+  final String phone;
+  final int age;
+  final String password;
+  final String passwordConfirm;
 
   factory SignupRequest.fromJson(Map<String, dynamic> json) => SignupRequest(
         name: json["name"],
@@ -94,57 +94,36 @@ class SignupResponse {
 
 class Result {
   Result({
-    required this.id,
-    required this.twoFactorSessionId,
-    required this.mobileNumber,
     required this.name,
-    required this.gender,
-    required this.dateOfBirth,
-    required this.jerseyNumber,
-    required this.isVerified,
-    required this.matchesOrganised,
-    required this.teams,
-    required this.v,
+    required this.email,
+    required this.phone,
+    required this.age,
+    required this.password,
+    required this.confirmPassword,
   });
 
-  final String id;
-  final String twoFactorSessionId;
-  final int mobileNumber;
   final String name;
-  final String gender;
-  final DateTime dateOfBirth;
-  final int jerseyNumber;
-  final bool isVerified;
-  final List<dynamic> matchesOrganised;
-  final List<dynamic> teams;
-  final int v;
+  final String email;
+  final String phone;
+  final int age;
+  final String password;
+  final DateTime confirmPassword;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-        id: json["_id"],
-        twoFactorSessionId: json["twoFactorSessionID"],
-        mobileNumber: json["mobileNumber"],
         name: json["name"],
-        gender: json["gender"],
-        dateOfBirth: DateTime.parse(json["dateOfBirth"]),
-        jerseyNumber: json["jerseyNumber"],
-        isVerified: json["isVerified"],
-        matchesOrganised:
-            List<dynamic>.from(json["matchesOrganised"].map((x) => x)),
-        teams: List<dynamic>.from(json["teams"].map((x) => x)),
-        v: json["__v"],
+        email: json["email"],
+        phone: json["phone"],
+        age: json["age"],
+        password: json["password"],
+        confirmPassword: DateTime.parse(json["confirmPassword"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "twoFactorSessionID": twoFactorSessionId,
-        "mobileNumber": mobileNumber,
         "name": name,
-        "gender": gender,
-        "dateOfBirth": dateOfBirth.toIso8601String(),
-        "jerseyNumber": jerseyNumber,
-        "isVerified": isVerified,
-        "matchesOrganised": List<dynamic>.from(matchesOrganised.map((x) => x)),
-        "teams": List<dynamic>.from(teams.map((x) => x)),
-        "__v": v,
+        "email": email,
+        "phone": phone,
+        "age": age,
+        "password": password,
+        "confirmPassword": confirmPassword,
       };
 }

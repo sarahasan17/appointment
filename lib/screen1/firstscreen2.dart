@@ -15,7 +15,22 @@ import 'dart:ffi';
 
 class Firstscreen2 extends StatefulWidget {
   final CameraDescription camera;
-  const Firstscreen2({Key? key, required this.camera}) : super(key: key);
+  final String? name;
+  final String? email;
+  final String? phone;
+  final int? age;
+  final String? password;
+  final String? passwordConfirm;
+  const Firstscreen2(
+      {Key? key,
+      required this.camera,
+      this.name,
+      this.email,
+      this.phone,
+      this.age,
+      this.password,
+      this.passwordConfirm})
+      : super(key: key);
 
   @override
   State<Firstscreen2> createState() => _Firstscreen2State();
