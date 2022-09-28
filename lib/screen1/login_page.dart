@@ -6,6 +6,7 @@ import 'package:appointment/auth/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
 import 'package:appointment/auth/cubit.dart';
+import 'package:appointment/screen1/Forgot_Password.dart';
 
 class Loadingscreen extends StatelessWidget {
   const Loadingscreen({Key? key}) : super(key: key);
@@ -154,10 +155,24 @@ class _LoginState extends State<Login> {
                           },
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Forgot_password(
+                                          camera: widget.camera)),
+                                );
+                              },
+                              child: const Text(
+                                "Forgot Password?    ",
+                                style: TextStyle(color: blue),
+                              ),
+                            ),
                             const Text(
-                              "Don't have an account    ",
+                              "Don't have an account",
                               style: TextStyle(color: blue),
                             ),
                             GestureDetector(
@@ -209,9 +224,7 @@ class text_app extends StatelessWidget {
           height: 42.0,
           child: Text(
             text,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 20.0),
           ),
         ),
       ),

@@ -1,12 +1,4 @@
-import 'dart:convert';
 import 'package:appointment/auth/state.dart';
-import 'package:appointment/screen1/signup.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
-import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:connectivity/connectivity.dart';
-import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:appointment/auth/api_call.dart';
 
