@@ -97,7 +97,8 @@ class _SignupState extends State<Signup> {
                         const SizedBox(
                           height: 48.0,
                         ),
-                        TextField(
+                        TextFormField(
+                          controller: name,
                           textAlign: TextAlign.left,
                           key: _nameKey,
                           keyboardType: TextInputType.name,
@@ -132,7 +133,7 @@ class _SignupState extends State<Signup> {
                             };
                           },
                           decoration: kinputdecoration.copyWith(
-                              hintText: 'Enter your phone'),
+                              hintText: 'Enter your email id'),
                         ),
                         const SizedBox(
                           height: 10.0,
@@ -140,6 +141,7 @@ class _SignupState extends State<Signup> {
                         TextFormField(
                           textAlign: TextAlign.left,
                           key: _phoneKey,
+                          controller: phone,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
                             _isButtonDisabled = _phoneKey.currentState!.isValid;
@@ -149,7 +151,6 @@ class _SignupState extends State<Signup> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter some text';
                               }
-                              ;
                             };
                           },
                           decoration: kinputdecoration.copyWith(
@@ -161,6 +162,7 @@ class _SignupState extends State<Signup> {
                         TextFormField(
                           textAlign: TextAlign.left,
                           key: _ageKey,
+                          controller: age,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
                             _isButtonDisabled = _ageKey.currentState!.isValid;
@@ -170,7 +172,6 @@ class _SignupState extends State<Signup> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter some text';
                               }
-                              ;
                             };
                           },
                           decoration: kinputdecoration.copyWith(
@@ -182,6 +183,7 @@ class _SignupState extends State<Signup> {
                         TextFormField(
                           textAlign: TextAlign.left,
                           key: _passwordKey,
+                          controller: password,
                           obscureText: true,
                           onChanged: (value) {
                             _isButtonDisabled =
@@ -200,9 +202,10 @@ class _SignupState extends State<Signup> {
                         const SizedBox(
                           height: 10.0,
                         ),
-                        TextField(
+                        TextFormField(
                           textAlign: TextAlign.left,
                           key: _passwordConfirmKey,
+                          controller: passwordConfirm,
                           obscureText: true,
                           onChanged: (value) {
                             _isButtonDisabled =
@@ -248,53 +251,68 @@ class _SignupState extends State<Signup> {
                               print('Size: ${file.size}');
                               print('Extension: ${file.extension}');
                               print('Path: ${file.path}');
-                              final newfile = await saveFilepermanently(file);
+                              final newfile = await SaveFilePermanently(file);
                               print('From path:${file.path}');
                               print('From path:${newfile.path}');
                             },
                           ),
                         ),
-                        Text_App(
-                            text: 'SIGN UP',
-                            colors: blue,
-                            onPress: () {
-                              BlocConsumer<SignupCubit, SignupState>(
-                                  listener: (context, state) {
-                                if (state is LoginSuccess) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Firstscreen2(
-                                              camera: widget.camera)));
-                                }
-                                if (state is SignupError) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Enter valid Data'),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
-                                }
-                              }, builder: (context, state) {
-                                if (state is SignupLoading) {
-                                  return const Loadingscreen();
-                                }
-                                return Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: const [
-                                    Text(
-                                      'Correct info',
-                                      style: TextStyle(color: blue),
-                                    ),
-                                    Icon(
-                                      Icons.keyboard_arrow_right_outlined,
-                                      color: Colors.green,
-                                    ),
-                                  ],
-                                );
-                              });
-                            }),
+                        BlocConsumer<SignupCubit, SignupState>(
+                          listener: (context, state) {
+                            if (state is LoginSuccess) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Firstscreen2(camera: widget.camera)));
+                            }
+                            if (state is SignupError) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Enter valid Data'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is SignupLoading) {
+                              return const Loadingscreen();
+                            }
+                            return Container(
+                              height: 60,
+                              width: 420,
+                              child: TextButton(
+                                onPressed: !_isButtonDisabled
+                                    ? null
+                                    : () {
+                                        // context.router
+                                        //     .push(OTPScreen(email: email.text));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Firstscreen2(
+                                                        camera:
+                                                            widget.camera)));
+                                        context.read<SignupCubit>().signup(
+                                            name.text,
+                                            email.text,
+                                            phone.text,
+                                            age.text,
+                                            password.text,
+                                            passwordConfirm.text);
+                                      },
+                                child: const Text(
+                                  'SIGN UP',
+                                  style: TextStyle(
+                                      color: white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            );
+                          },
+                        )
                       ],
                     ),
                   ),
@@ -312,9 +330,9 @@ void openFile(PlatformFile file) {
   OpenFilex.open(file.path!);
 }
 
-Future saveFilepermanently(PlatformFile file) async {
-  final appstorage = await getApplicationDocumentsDirectory();
-  final newFile = File(appstorage.path);
+Future SaveFilePermanently(PlatformFile file) async {
+  final AppStorage = await getApplicationDocumentsDirectory();
+  final newFile = File(AppStorage.path);
 }
 
 class Text_App extends StatelessWidget {

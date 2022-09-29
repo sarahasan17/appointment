@@ -33,7 +33,7 @@ class LoginRepo {
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
   Future<dynamic> login(String email, String password) async {
-    String url = '{{devjams-production.up.railway.app}}/api/v1/users/login';
+    String url = 'devjams-production.up.railway.app/api/v1/users/login';
     if (await _networkInfo.isConnected()) {
       try {
         final Response response = await _dio.post(
@@ -59,9 +59,9 @@ class SignupRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
-  Future<dynamic> login(String name, String email, String phone, String age,
+  Future<dynamic> signup(String name, String email, String phone, String age,
       String password, String passwordConfirm) async {
-    String url = '{{devjams-production.up.railway.app}}/api/v1/users/signup';
+    String url = 'devjams-production.up.railway.app/api/v1/users/signup';
     if (await _networkInfo.isConnected()) {
       try {
         final Response response = await _dio.post(

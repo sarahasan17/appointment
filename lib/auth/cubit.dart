@@ -16,4 +16,14 @@ class LoginCubit extends Cubit<LoginState> {
 //signupcubit
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit() : super(SignupInitial());
+  final SignupRepo _signupRepo = SignupRepo();
+
+  void signup(String name, String email, String phone, String age,
+      String password, String passwordConfirm) async {
+    emit(SignupLoading());
+    var res = await _signupRepo.signup(
+        name, email, phone, age, password, passwordConfirm);
+    res.fold(
+        (l) => emit(SignupError(l.message)), (r) => emit(SignupSuccess(res)));
+  }
 }
