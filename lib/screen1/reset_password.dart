@@ -1,4 +1,3 @@
-import 'package:appointment/auth/reset_password.dart';
 import 'package:appointment/screen1/firstscreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:appointment/constants.dart';
@@ -8,25 +7,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
 import 'package:appointment/auth/cubit.dart';
 import 'package:appointment/auth/forgot_password.dart';
+import 'package:appointment/auth/reset_password.dart';
 
 Future part() async {
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
-  return (Forgot_password(camera: firstCamera));
+  return (Reset_password(camera: firstCamera));
 }
 
-class Forgot_password extends StatefulWidget {
+class Reset_password extends StatefulWidget {
   final CameraDescription camera;
-  const Forgot_password({required this.camera});
+  const Reset_password({required this.camera});
 
   @override
-  State<Forgot_password> createState() => _Forgot_passwordState();
+  State<Reset_password> createState() => _Reset_passwordState();
 }
 
-class _Forgot_passwordState extends State<Forgot_password> {
-  TextEditingController email = TextEditingController();
-  final GlobalKey<FormFieldState> _emailKey = GlobalKey<FormFieldState>();
+class _Reset_passwordState extends State<Reset_password> {
+  TextEditingController password = TextEditingController();
+  TextEditingController passwordConfirm = TextEditingController();
+  final GlobalKey<FormFieldState> _passwordKey = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> _passwordConfirmKey =
+      GlobalKey<FormFieldState>();
   bool _isButtonDisabled = false;
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,7 @@ class _Forgot_passwordState extends State<Forgot_password> {
               children: [
                 const Center(
                   child: Text(
-                    'FORGOT PASSWORD',
+                    'RESET PASSWORD',
                     style: TextStyle(
                         fontSize: 35.0,
                         fontWeight: FontWeight.w600,
@@ -63,36 +66,60 @@ class _Forgot_passwordState extends State<Forgot_password> {
                   height: 20.0,
                 ),
                 TextFormField(
-                  controller: email,
-                  key: _emailKey,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.left,
+                  key: _passwordKey,
+                  obscureText: true,
                   onChanged: (value) {
-                    _isButtonDisabled = _emailKey.currentState!.isValid;
-                    _emailKey.currentState?.validate();
+                    _isButtonDisabled = _passwordKey.currentState!.isValid;
+                    _passwordKey.currentState?.validate();
+                    validator:
+                    (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                    };
                   },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
+                  decoration: kinputdecoration.copyWith(
+                      hintText: 'Enter your password.'),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.left,
+                  key: _passwordConfirmKey,
+                  obscureText: true,
+                  onChanged: (value) {
+                    _isButtonDisabled =
+                        _passwordConfirmKey.currentState!.isValid;
+                    _passwordConfirmKey.currentState?.validate();
+                    validator:
+                    (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                    };
                   },
-                  decoration:
-                      kinputdecoration.copyWith(hintText: 'Enter your email'),
+                  decoration: kinputdecoration.copyWith(
+                      hintText: 'Confirm your password'),
+                ),
+                const SizedBox(
+                  height: 10.0,
                 ),
                 Text_App(
                     text: 'CONTINUE',
                     colors: blue,
                     onPress: () {
-                      BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+                      BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
                         listener: (context, state) {
-                          if (state is ForgotPasswordSuccess) {
+                          if (state is ResetPasswordSuccess) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         Firstscreen2(camera: widget.camera)));
                           }
-                          if (state is ForgotPasswordError) {
+                          if (state is LoginError) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Enter valid Data'),
@@ -102,7 +129,7 @@ class _Forgot_passwordState extends State<Forgot_password> {
                           }
                         },
                         builder: (context, state) {
-                          if (state is ForgotPasswordLoading) {
+                          if (state is ResetPasswordLoading) {
                             return const Loadingscreen();
                           }
                           return Container();
