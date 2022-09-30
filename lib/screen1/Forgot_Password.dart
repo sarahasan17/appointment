@@ -32,7 +32,7 @@ class _Forgot_passwordState extends State<Forgot_password> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
-        create: (context) => LoginCubit(),
+        create: (context) => ForgotPasswordCubit(),
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: blue,

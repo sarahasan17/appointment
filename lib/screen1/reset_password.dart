@@ -35,7 +35,7 @@ class _Reset_passwordState extends State<Reset_password> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
-        create: (context) => LoginCubit(),
+        create: (context) => ResetPasswordCubit(),
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: blue,

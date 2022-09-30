@@ -8,6 +8,7 @@ import 'package:camera/camera.dart';
 import 'package:appointment/auth/cubit.dart';
 import 'package:appointment/screen1/Forgot_Password.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:appointment/auth/loginresponse.dart';
 
 class Loadingscreen extends StatelessWidget {
   const Loadingscreen({Key? key}) : super(key: key);
