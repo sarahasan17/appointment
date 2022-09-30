@@ -24,6 +24,6 @@ class SignupCubit extends Cubit<SignupState> {
     var res = await _signupRepo.signup(
         name, email, phone, age, password, passwordConfirm);
     res.fold(
-        (l) => emit(SignupError(l.message)), (r) => emit(SignupSuccess(res)));
+        (l) => emit(SignupError(l.message)), (r) => emit(SignupSuccess(r)));
   }
 }

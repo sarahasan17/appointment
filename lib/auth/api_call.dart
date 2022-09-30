@@ -27,12 +27,21 @@ class Failure {
   Failure({required this.message});
 }
 
+class UnidentifiedFailure extends Failure {
+  final String? errorMessage;
+  UnidentifiedFailure({this.errorMessage})
+      : super(
+            message:
+                errorMessage ?? "An error occured, please try again later.");
+}
+
 //login repo
 class LoginRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
-  Future<dynamic> login(String email, String password) async {
+  Future<Either<Failure, Map<String, dynamic>>> login(
+      String email, String password) async {
     String url = 'devjams-production.up.railway.app/api/v1/users/login';
     if (await _networkInfo.isConnected()) {
       try {
@@ -45,11 +54,13 @@ class LoginRepo {
         if (response.statusCode == 200) {
           return Right(body);
         } else {
-          return Left(body);
+          return Left(UnidentifiedFailure());
         }
       } catch (e) {
-        Failure(message: 'Error');
+        return Left(UnidentifiedFailure());
       }
+    } else {
+      return Left(Failure(message: "Network Failure"));
     }
   }
 }
@@ -59,8 +70,8 @@ class SignupRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
-  Future<dynamic> signup(String name, String email, String phone, String age,
-      String password, String passwordConfirm) async {
+  Future<Either<Failure, SignupResponse>> signup(String name, String email,
+      String phone, String age, String password, String passwordConfirm) async {
     String url = 'devjams-production.up.railway.app/api/v1/users/signup';
     if (await _networkInfo.isConnected()) {
       try {
@@ -75,16 +86,18 @@ class SignupRepo {
             'passwordConfirm': passwordConfirm
           }),
         );
-
+        print(response.data);
         var body = response.data as Map<String, dynamic>;
         if (response.statusCode == 200) {
-          return Right(body);
+          return Right(SignupResponse.fromJson(body));
         } else {
-          return Left(body);
+          return Left(UnidentifiedFailure());
         }
       } catch (e) {
-        Failure(message: 'Error');
+        return Left(UnidentifiedFailure());
       }
+    } else {
+      return Left(Failure(message: "Network Failure"));
     }
   }
 }

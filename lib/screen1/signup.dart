@@ -55,7 +55,7 @@ class _SignupState extends State<Signup> {
     super.initState();
   }
 
-  bool _isButtonDisabled = false;
+  //bool _isButtonDisabled = false;
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
@@ -103,8 +103,8 @@ class _SignupState extends State<Signup> {
                           key: _nameKey,
                           keyboardType: TextInputType.name,
                           onChanged: (value) {
-                            _isButtonDisabled = _nameKey.currentState!.isValid;
-                            _nameKey.currentState?.validate();
+                            /*_isButtonDisabled = _nameKey.currentState!.isValid;
+                            _nameKey.currentState?.validate();*/
                             validator:
                             (value) {
                               if (value == null || value.isEmpty) {
@@ -121,10 +121,11 @@ class _SignupState extends State<Signup> {
                         TextFormField(
                           textAlign: TextAlign.left,
                           key: _emailKey,
+                          controller: email,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (value) {
-                            _isButtonDisabled = _emailKey.currentState!.isValid;
-                            _emailKey.currentState?.validate();
+                            /*_isButtonDisabled = _emailKey.currentState!.isValid;
+                            _emailKey.currentState?.validate();*/
                             validator:
                             (value) {
                               if (value == null || value.isEmpty) {
@@ -144,8 +145,8 @@ class _SignupState extends State<Signup> {
                           controller: phone,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            _isButtonDisabled = _phoneKey.currentState!.isValid;
-                            _phoneKey.currentState?.validate();
+                            /*_isButtonDisabled = _phoneKey.currentState!.isValid;
+                            _phoneKey.currentState?.validate();*/
                             validator:
                             (value) {
                               if (value == null || value.isEmpty) {
@@ -157,7 +158,7 @@ class _SignupState extends State<Signup> {
                               hintText: 'Enter your phone number'),
                         ),
                         const SizedBox(
-                          height: 10.0,
+                          height: 20.0,
                         ),
                         TextFormField(
                           textAlign: TextAlign.left,
@@ -165,8 +166,8 @@ class _SignupState extends State<Signup> {
                           controller: age,
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            _isButtonDisabled = _ageKey.currentState!.isValid;
-                            _ageKey.currentState?.validate();
+                            /* _isButtonDisabled = _ageKey.currentState!.isValid;
+                            _ageKey.currentState?.validate();*/
                             validator:
                             (value) {
                               if (value == null || value.isEmpty) {
@@ -186,9 +187,9 @@ class _SignupState extends State<Signup> {
                           controller: password,
                           obscureText: true,
                           onChanged: (value) {
-                            _isButtonDisabled =
+                            /*_isButtonDisabled =
                                 _passwordKey.currentState!.isValid;
-                            _passwordKey.currentState?.validate();
+                            _passwordKey.currentState?.validate();*/
                             validator:
                             (value) {
                               if (value == null || value.isEmpty) {
@@ -208,9 +209,9 @@ class _SignupState extends State<Signup> {
                           controller: passwordConfirm,
                           obscureText: true,
                           onChanged: (value) {
-                            _isButtonDisabled =
+                            /* _isButtonDisabled =
                                 _passwordConfirmKey.currentState!.isValid;
-                            _passwordConfirmKey.currentState?.validate();
+                            _passwordConfirmKey.currentState?.validate();*/
                             validator:
                             (value) {
                               if (value == null || value.isEmpty) {
@@ -257,9 +258,12 @@ class _SignupState extends State<Signup> {
                             },
                           ),
                         ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
                         BlocConsumer<SignupCubit, SignupState>(
                           listener: (context, state) {
-                            if (state is LoginSuccess) {
+                            if (state is SignupSuccess) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -280,29 +284,33 @@ class _SignupState extends State<Signup> {
                               return const Loadingscreen();
                             }
                             return Container(
-                              height: 60,
-                              width: 420,
+                              decoration: BoxDecoration(
+                                  color: blue,
+                                  borderRadius: BorderRadius.circular(25.0)),
+                              height: 50,
+                              width: 380,
                               child: TextButton(
-                                onPressed: !_isButtonDisabled
+                                /*!_isButtonDisabled
                                     ? null
                                     : () {
                                         // context.router
-                                        //     .push(OTPScreen(email: email.text));
-                                        Navigator.push(
+                                       */ //     .push(OTPScreen(email: email.text));
+                                onPressed: () {
+                                  /*Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     Firstscreen2(
                                                         camera:
-                                                            widget.camera)));
-                                        context.read<SignupCubit>().signup(
-                                            name.text,
-                                            email.text,
-                                            phone.text,
-                                            age.text,
-                                            password.text,
-                                            passwordConfirm.text);
-                                      },
+                                                            widget.camera)));*/
+                                  context.read<SignupCubit>().signup(
+                                      name.text,
+                                      email.text,
+                                      phone.text,
+                                      age.text,
+                                      password.text,
+                                      passwordConfirm.text);
+                                },
                                 child: const Text(
                                   'SIGN UP',
                                   style: TextStyle(

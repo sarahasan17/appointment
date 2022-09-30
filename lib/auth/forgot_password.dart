@@ -3,15 +3,19 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:appointment/auth/api_call.dart';
 import 'package:bloc/bloc.dart';
+import 'package:appointment/auth/api_call.dart';
+import 'package:appointment/auth/cubit.dart';
+import 'package:appointment/auth/state.dart';
 
 //forgot password repo
 class ForgotpasswordRepo {
   final Dio _dio = Dio();
   final NetworkInfoImpl _networkInfo = NetworkInfoImpl();
 
-  Future<dynamic> forgotpassword(String email) async {
+  Future<Either<Failure, Map<String, dynamic>>> forgotpassword(
+      String email) async {
     String url =
-        '{{devjams-production.up.railway.app}}/api/v1/users/forgotPassword';
+        'devjams-production.up.railway.app/api/v1/users/forgotPassword';
     if (await _networkInfo.isConnected()) {
       try {
         final Response response = await _dio.post(
@@ -23,11 +27,13 @@ class ForgotpasswordRepo {
         if (response.statusCode == 200) {
           return Right(body);
         } else {
-          return Left(body);
+          return Left(UnidentifiedFailure());
         }
       } catch (e) {
-        Failure(message: 'Error');
+        return Left(UnidentifiedFailure());
       }
+    } else {
+      return Left(Failure(message: "Network Failure"));
     }
   }
 }

@@ -27,7 +27,7 @@ class Forgot_password extends StatefulWidget {
 class _Forgot_passwordState extends State<Forgot_password> {
   TextEditingController email = TextEditingController();
   final GlobalKey<FormFieldState> _emailKey = GlobalKey<FormFieldState>();
-  bool _isButtonDisabled = false;
+  //bool _isButtonDisabled = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,8 +68,8 @@ class _Forgot_passwordState extends State<Forgot_password> {
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.emailAddress,
                   onChanged: (value) {
-                    _isButtonDisabled = _emailKey.currentState!.isValid;
-                    _emailKey.currentState?.validate();
+                    /* _isButtonDisabled = _emailKey.currentState!.isValid;
+                    _emailKey.currentState?.validate();*/
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -79,36 +79,53 @@ class _Forgot_passwordState extends State<Forgot_password> {
                   decoration:
                       kinputdecoration.copyWith(hintText: 'Enter your email'),
                 ),
-                Text_App(
-                    text: 'CONTINUE',
-                    colors: blue,
-                    onPress: () {
-                      BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
-                        listener: (context, state) {
-                          if (state is ForgotPasswordSuccess) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        Firstscreen2(camera: widget.camera)));
-                          }
-                          if (state is ForgotPasswordError) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Enter valid Data'),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          }
-                        },
-                        builder: (context, state) {
-                          if (state is ForgotPasswordLoading) {
-                            return const Loadingscreen();
-                          }
-                          return Container();
-                        },
-                      );
-                    })
+                const SizedBox(
+                  height: 10.0,
+                ),
+                BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+                    listener: (context, state) {
+                  if (state is ForgotPasswordSuccess) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Firstscreen2(camera: widget.camera)));
+                  }
+                  if (state is ForgotPasswordError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Enter valid Data'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                }, builder: (context, state) {
+                  if (state is ForgotPasswordLoading) {
+                    return const Loadingscreen();
+                  }
+                  return Container(
+                    height: 50,
+                    width: 380,
+                    decoration: BoxDecoration(
+                        color: blue, borderRadius: BorderRadius.circular(25.0)),
+                    child: TextButton(
+                      onPressed: () {
+                        context
+                            .read<ForgotPasswordCubit>()
+                            .ForgotPassword(email.text);
+                        /* Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Firstscreen2(
+                                              camera: widget.camera)));*/
+                      },
+                      child: const Text(
+                        'CONTINUE',
+                        style: TextStyle(color: white),
+                      ),
+                    ),
+                  );
+                })
               ],
             ),
           ),

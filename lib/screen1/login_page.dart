@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
   TextEditingController passwordcontroller = TextEditingController();
   final GlobalKey<FormFieldState> _emailKey = GlobalKey<FormFieldState>();
   final GlobalKey<FormFieldState> _passwordKey = GlobalKey<FormFieldState>();
-  bool _isButtonDisabled = false;
+  //bool _isButtonDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +82,8 @@ class _LoginState extends State<Login> {
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) {
-                      _isButtonDisabled = _emailKey.currentState!.isValid;
-                      _emailKey.currentState?.validate();
+                      /* _isButtonDisabled = _emailKey.currentState!.isValid;
+                      _emailKey.currentState?.validate();*/
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -103,8 +103,8 @@ class _LoginState extends State<Login> {
                     textAlign: TextAlign.center,
                     obscureText: true,
                     onChanged: (value) {
-                      _isButtonDisabled = _passwordKey.currentState!.isValid;
-                      _passwordKey.currentState?.validate();
+                      /*_isButtonDisabled = _passwordKey.currentState!.isValid;
+                      _passwordKey.currentState?.validate();*/
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -146,18 +146,15 @@ class _LoginState extends State<Login> {
                             color: blue,
                             borderRadius: BorderRadius.circular(25.0)),
                         child: TextButton(
-                          onPressed: !_isButtonDisabled
-                              ? null
-                              : () {
-                                  context.read<LoginCubit>().login(
-                                      emailcontroller.text,
-                                      passwordcontroller.text);
-                                  /* Navigator.push(
+                          onPressed: () {
+                            context.read<LoginCubit>().login(
+                                emailcontroller.text, passwordcontroller.text);
+                            /* Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => Firstscreen2(
                                               camera: widget.camera)));*/
-                                },
+                          },
                           child: const Text(
                             'LOG IN',
                             style: TextStyle(color: white),

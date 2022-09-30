@@ -1,20 +1,20 @@
 //signupRequest
 class SignupRequest {
   SignupRequest({
-    this.name = '',
-    this.email = '',
-    this.phone = '',
-    this.age = 0,
-    this.password = '',
-    this.passwordConfirm = '',
+    this.name,
+    this.email,
+    this.phone,
+    this.age,
+    this.password,
+    this.passwordConfirm,
   });
 
-  final String name;
-  final String email;
-  final String phone;
-  final int age;
-  final String password;
-  final String passwordConfirm;
+  final String? name;
+  final String? email;
+  final String? phone;
+  final int? age;
+  final String? password;
+  final String? passwordConfirm;
 
   factory SignupRequest.fromJson(Map<String, dynamic> json) => SignupRequest(
         name: json["name"],
